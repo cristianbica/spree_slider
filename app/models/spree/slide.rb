@@ -1,12 +1,19 @@
 class Spree::Slide < ActiveRecord::Base
 
-  has_attached_file :image
+  has_attached_file :image,
+                  styles: { slide: '960x320#' },
+                  default_style: :slide,
+                  url: '/spree/slides/:id/:style/:basename.:extension',
+                  path: ':rails_root/public/spree/slides/:id/:style/:basename.:extension',
+                  convert_options: { all: '-strip -auto-orient -colorspace RGB' }
+
+
   include Spree::Core::S3Support
   supports_s3 :image
 
   scope :published, where(:published => true)
 
-  attr_accessible :name, :body, :link_url, :published, :image, :position, :product_id
+  #attr_accessible :name, :body, :link_url, :published, :image, :position, :product_id
 
   belongs_to :product
 
