@@ -17,7 +17,7 @@ class Spree::Slide < ActiveRecord::Base
 
   belongs_to :product
 
-  def initialize(attrs = nil)
+  def initialize(attrs = nil, options = {})
     attrs ||= {:published => true}
     super
   end
